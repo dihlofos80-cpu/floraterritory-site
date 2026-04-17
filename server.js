@@ -265,8 +265,8 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'yandex',
   auth: {
-    user: 'grechkovb@yandex.ru',
-    pass: 'vzjdwtmczvxlqsxb'
+    user: process.env.SMTP_USER || 'grechkovb@yandex.ru',
+    pass: process.env.SMTP_PASS || 'vzjdwtmczvxlqsxb'
   }
 });
 
