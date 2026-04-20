@@ -356,16 +356,29 @@
     const headerBgScrolled = header.dataset.headerBgScrolled || headerBg;
     const titleColor = header.dataset.titleColor || '#ffffff';
     const titleColorScrolled = header.dataset.titleColorScrolled || '#222222';
+    
     if (header.classList.contains('transparent') && servicesSection) {
       const rect = servicesSection.getBoundingClientRect();
-      if (rect.top <= 100) {
-        header.style.background = hexToRgba(headerBgScrolled, 0.8);
+      const scrollY = window.scrollY;
+      
+      if (rect.top <= 0) {
+        // Под шапкой - полностью непрозрачный
+        header.style.background = headerBgScrolled;
+        document.querySelector('.site-title').style.color = titleColorScrolled;
+        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label').forEach(el => el.style.color = titleColorScrolled);
+      } else if (rect.top > 0 && rect.top <= 300) {
+        // В переходной зоне - плавно увеличиваем opacity от 0.2 до 0.95
+        const progress = rect.top / 300; // 0 вверху hero, 1到达services
+        const opacity = 0.2 + (0.95 - 0.2) * (1 - progress);
+        header.style.background = hexToRgba(headerBgScrolled, opacity);
+        // Плавная смена цвета текста
         document.querySelector('.site-title').style.color = titleColorScrolled;
         document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label').forEach(el => el.style.color = titleColorScrolled);
       } else {
-        header.style.background = hexToRgba(headerBg, 0.5);
+        // В hero секции - прозрачный
+        header.style.background = 'transparent';
         document.querySelector('.site-title').style.color = titleColor;
-        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label').forEach(el => el.style.color = '');
+        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label').forEach(el => el.style.color = titleColor);
       }
     }
     lastScroll = window.scrollY;
@@ -376,7 +389,7 @@
     const header = document.querySelector('#mainHeader');
     const headerBg = header.dataset.headerBg || '#264d26';
     if (header.classList.contains('transparent')) {
-      header.style.background = hexToRgba(headerBg, 0.5);
+      header.style.background = 'transparent';
     }
   })();
   

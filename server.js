@@ -29,12 +29,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Session middleware for admin auth
-app.use((req, res, next) => {
-  req.isAdmin = req.session && req.session.isAdmin;
-  next();
-});
-
 // Setup multer for file uploads - store in public/images/ with unique names
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
