@@ -13,10 +13,6 @@
   box-sizing: border-box;
 }
 
-html {
-  overflow-x: hidden;
-}
-
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -282,8 +278,6 @@ header.transparent ~ main .hero {
 .gallery-section {
   background: #f5f0e6;
   padding: 80px 0;
-  position: relative;
-  z-index: 1;
 }
 
 .light-section {
@@ -396,10 +390,6 @@ header.transparent ~ main .hero {
 @media (max-width: 600px) {
   .services-slide {
     flex: 0 0 calc(100% - 18px);
-  }
-
-  body {
-    overflow-x: hidden;
   }
 }
 
@@ -606,46 +596,15 @@ footer .footer-inner {
 
   header {
     position: static;
-    padding: 4px 12px;
   }
 
   .header-inner {
-    flex-direction: row;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .logo img {
-    height: 28px !important;
-    opacity: 0.7 !important;
-  }
-
-  .site-title {
-    font-size: 14px !important;
-    margin: 0 !important;
-    line-height: 1.2;
-  }
-
-  .header-contacts {
-    font-size: 11px !important;
-    gap: 4px 10px !important;
-  }
-
-  .header-contacts .label {
-    display: none;
-  }
-
-  .header-contacts a {
-    padding: 2px 0;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .hero {
-    padding-top: 10px;
-  }
-
-  .section-title {
-    font-size: 22px;
+    padding-top: 26px;
   }
 
   .hero-image {
@@ -680,31 +639,21 @@ footer .footer-inner {
 
 .gallery-images-row {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  padding: 0;
-  scroll-snap-type: y mandatory;
+  padding: 0 16px;
 }
 
 .gallery-image-item {
-  aspect-ratio: 16/9;
+  aspect-ratio: 4/3;
   overflow: hidden;
-  border-radius: 0;
-  scroll-snap-align: start;
-  position: sticky;
-  top: 0;
+  border-radius: 8px;
 }
 
 .gallery-image-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.gallery-slider {
-  margin-left: -15px;
-  margin-right: -15px;
-  width: calc(100% + 30px);
 }
 
 .gallery-btn {
@@ -752,7 +701,7 @@ footer .footer-inner {
 
 @media (max-width: 768px) {
   .gallery-images-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
   
@@ -760,14 +709,6 @@ footer .footer-inner {
     width: 32px;
     height: 32px;
     font-size: 14px;
-  }
-
-  .services-slider,
-  .gallery-slider {
-    overflow-x: hidden;
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
   }
 }
 
@@ -793,77 +734,4 @@ footer .footer-inner {
   color: #264d26;
   text-decoration: underline;
 }
-}
-
-/* Fullscreen Gallery - Sticky on scroll */
-.fullscreen-gallery {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 200px);
-  min-height: 400px;
-  overflow: hidden;
-  margin: 0 -15px;
-}
-
-.fullscreen-gallery-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.fullscreen-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.fullscreen-slide.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.fullscreen-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.gallery-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: rgba(255,255,255,0.3);
-  z-index: 10;
-}
-
-.gallery-progress-bar {
-  height: 100%;
-  width: 0%;
-  background: rgba(255,255,255,0.8);
-  transition: width 0.1s linear;
-}
-
-.gallery-counter {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  color: white;
-  font-size: 14px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-  z-index: 10;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .fullscreen-gallery {
-    height: 60vh;
-    min-height: 300px;
-  }
 }

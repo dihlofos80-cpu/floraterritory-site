@@ -31,18 +31,19 @@ a {
 }
 
 header {
+  
   background: #264d26;
   color: #fff;
   padding: 6px 20px;
-  position: sticky;
   top: 0;
   z-index: 100;
 }
 
 header.transparent {
+  background: rgba(0, 0, 0, 0.3);
   position: fixed;
-  width: 100%;
   top: 0;
+  width: 100%;
   left: 0;
 }
 
@@ -101,19 +102,18 @@ header.transparent {
 }
 
 header.transparent ~ main .hero {
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .hero.has-hero-bg {
-  background-color: #f5f0e6 !important;
   position: relative;
   min-height: 100vh;
-  background-color: #f5f0e6;
+  background-size: cover;
+  background-position: center top;
 }
 
 .hero.has-hero-bg::before {
   content: '';
-  position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.5);
 }
@@ -183,7 +183,7 @@ header.transparent ~ main .hero {
 }
 
 .hero.has-hero-bg .hero-image {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.3);
   color: #fff;
 }
 
@@ -225,7 +225,7 @@ header.transparent ~ main .hero {
 }
 
 .btn-outline {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.3);
   color: var(--green-dark);
   border: 1px solid rgba(0,0,0,0.12);
 }
@@ -252,7 +252,6 @@ header.transparent ~ main .hero {
 
 .hero-image::before {
   content: "";
-  position: absolute;
   inset: 16px;
   border-radius: 16px;
   border: 1px dashed rgba(255,255,255,0.5);
@@ -346,7 +345,6 @@ header.transparent ~ main .hero {
 }
 
 .services-btn {
-  position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(232, 224, 208, 0.85);
@@ -687,12 +685,9 @@ footer .footer-inner {
 }
 
 .gallery-image-item {
-  aspect-ratio: 16/9;
+  aspect-ratio: 4/3;
   overflow: hidden;
-  border-radius: 0;
-  scroll-snap-align: start;
-  position: sticky;
-  top: 0;
+  border-radius: 8px;
 }
 
 .gallery-image-item img {
@@ -708,7 +703,6 @@ footer .footer-inner {
 }
 
 .gallery-btn {
-  position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(232, 224, 208, 0.85);
@@ -812,7 +806,6 @@ footer .footer-inner {
 }
 
 .fullscreen-slide {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -834,7 +827,6 @@ footer .footer-inner {
 }
 
 .gallery-progress {
-  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -851,7 +843,6 @@ footer .footer-inner {
 }
 
 .gallery-counter {
-  position: absolute;
   bottom: 15px;
   right: 15px;
   color: white;
@@ -867,3 +858,48 @@ footer .footer-inner {
     min-height: 300px;
   }
 }
+
+
+/* Hero Gallery - Fullscreen Slideshow */
+.hero-gallery {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 180px);
+  min-height: 400px;
+  overflow: hidden;
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+.hero-gallery-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+.hero-gallery-overlay {
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
