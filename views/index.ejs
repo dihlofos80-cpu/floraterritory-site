@@ -91,6 +91,9 @@
       <div class="logo"><img src="<%= content.logoPath || '/images/logo.png' %>" alt="<%= content.siteTitle || 'Логотип сайта' %>" style="height: <%= content.logoHeight || '50px' %>; opacity: 0.6;"/></div>
 
       <div class="site-title" style="color:<%= content.titleColor || "#fff" %>;text-shadow:1px 1px 2px rgba(0,0,0,0.5);"><%= content.siteTitle %></div>
+      <nav style="display:flex;gap:15px;">
+        <a href="/blog" style="color:<%= content.titleColor || '#fff' %>;text-decoration:none;font-size:14px;">Блог</a>
+      </nav>
       <div class="header-contacts">
         <a href="tel:+<%= content.phone.replace(/[^0-9]/g, '') %>">
           <span class="label">Телефон:</span>

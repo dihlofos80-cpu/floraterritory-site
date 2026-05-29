@@ -83,6 +83,22 @@ app.get('/privacy-policy', (req, res) => {
   res.render('privacy-policy', { content });
 });
 
+// Blog main page
+app.get('/blog', (req, res) => {
+  const content = loadContent();
+  res.render('blog', { content });
+});
+
+// Blog post page
+app.get('/blog/:slug', (req, res) => {
+  const content = loadContent();
+  const post = (content.blog || []).find(p => p.slug === req.params.slug);
+  if (!post) {
+    return res.redirect('/blog');
+  }
+  res.render('blog-post', { content, post });
+});
+
 // Admin login page
 app.get('/admin-login', (req, res) => {
   res.render('admin-login');

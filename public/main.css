@@ -903,3 +903,66 @@ footer .footer-inner {
   font-size: 14px;
 }
 
+
+/* Blog Styles */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+.blog-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+.blog-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+.blog-content {
+  padding: 20px;
+}
+.blog-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #264d26;
+}
+.blog-excerpt {
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+/* Blog Post Styles */
+.blog-post {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.blog-post-image {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+}
+.blog-post h1 {
+  padding: 30px 30px 10px;
+  font-size: 2rem;
+  color: #264d26;
+}
+.blog-post-content {
+  padding: 0 30px 30px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+.blog-post-content p {
+  margin-bottom: 15px;
+}
