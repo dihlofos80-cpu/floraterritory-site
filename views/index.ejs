@@ -23,12 +23,13 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="<%= content.siteTitle %> — озеленение и ландшафтный дизайн">
   <meta name="twitter:description" content="Профессиональное озеленение и ландшафтный дизайн в Ижевске.">
-  <!-- Микроразметка Organization -->
+  <!-- Микроразметка LocalBusiness -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "LocalBusiness",
     "name": "Территория Флоры",
+    "image": "https://floraterritory.ru/images/logo.png",
     "url": "https://floraterritory.ru",
     "telephone": "+79127460468",
     "email": "grechkovb@yandex.ru",
@@ -42,7 +43,26 @@
       "@type": "State",
       "name": "Удмуртская Республика"
     },
-    "priceRange": "₽₽"
+    "priceRange": "₽₽",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "09:00",
+        "closes": "20:00"
+      }
+    ],
+    "sameAs": [
+      "https://t.me/Grechkovb"
+    ]
   }
   </script>
   <!-- Yandex.Metrika counter -->
@@ -152,7 +172,7 @@
       <div class="hero-gallery" id="heroGallery">
         <div class="hero-gallery-inner">
           <% content.gallery.forEach(function(img, idx) { %>
-            <div class="hero-slide<%= idx === 0 ? ' active' : '' %>" style="background-image: url('<%= img %>');" role="img" aria-label="Пример работы"></div>
+            <div class="hero-slide<%= idx === 0 ? ' active' : '' %>" style="background-image: url('<%= img %>');" role="img" aria-label="Пример работы — озеленение и ландшафтный дизайн в Ижевске"></div>
           <% }); %>
         </div>
         <div class="hero-gallery-overlay">

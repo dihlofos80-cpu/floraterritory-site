@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+# Блокируем только админку и технические директории
+Disallow: /admin
+Disallow: /api/
+Disallow: /node_modules/
+
 Sitemap: https://floraterritory.ru/sitemap.xml
+Host: https://floraterritory.ru
