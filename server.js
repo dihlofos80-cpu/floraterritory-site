@@ -116,13 +116,19 @@ app.post('/admin-login', (req, res) => {
 });
 
 // Admin page - require auth
-// New admin panel
+// New admin panel - require auth
 app.get('/admin', (req, res) => {
+  if (!req.cookies || req.cookies.admin_auth !== 'true') {
+    return res.redirect('/admin-login');
+  }
   const content = loadContent();
   res.render('admin-new', { content, message: null });
 });
 
 app.post('/admin/save', (req, res) => {
+  if (!req.cookies || req.cookies.admin_auth !== 'true') {
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
   const content = loadContent();
   const body = req.body;
   
@@ -142,6 +148,9 @@ app.post('/admin/save', (req, res) => {
 });
 
 app.post('/admin/upload', upload.single('file'), (req, res) => {
+  if (!req.cookies || req.cookies.admin_auth !== 'true') {
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
   if (req.file) {
     res.json({ success: true, path: '/uploads/' + req.file.filename });
   } else {
