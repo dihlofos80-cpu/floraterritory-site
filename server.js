@@ -116,7 +116,42 @@ app.post('/admin-login', (req, res) => {
 });
 
 // Admin page - require auth
+// New admin panel
 app.get('/admin', (req, res) => {
+  const content = loadContent();
+  res.render('admin-new', { content, message: null });
+});
+
+app.post('/admin/save', (req, res) => {
+  const content = loadContent();
+  const body = req.body;
+  
+  ['siteTitle', 'phone', 'email', 'region', 'heroTitle', 'heroSubtitle', 'heroImage', 'logoPath', 'logoHeight',
+   'headerBg', 'headerBgScrolled', 'titleColor', 'titleColorScrolled',
+   'sectionBg', 'cardBg', 'accentColor', 'footerBg', 'footerText', 'formBg', 'formText',
+   'blogHeroTitle', 'blogHeroSubtitle'].forEach(key => {
+    if (body[key]) content[key] = body[key];
+  });
+  
+  if (body.blog) content.blog = body.blog;
+  if (body.gallery) content.gallery = Array.isArray(body.gallery) ? body.gallery : [body.gallery];
+  if (body.galleryNew) { if (!content.gallery) content.gallery = []; content.gallery.push(body.galleryNew); }
+  
+  fs.writeFileSync(CONTENT_PATH, JSON.stringify(content, null, 2));
+  res.render('admin-new', { content, message: { type: 'success', text: 'Сохранено!' } });
+});
+
+app.post('/admin/upload', upload.single('file'), (req, res) => {
+  if (req.file) {
+    res.json({ success: true, path: '/uploads/' + req.file.filename });
+  } else {
+    res.json({ success: false, error: 'No file' });
+  }
+});
+
+// OLD ADMIN
+
+app.get('/admin-old', (req, res) => {
   const isAdmin = req.cookies && req.cookies.admin_auth === 'true';
   if (!isAdmin) {
     return res.redirect('/admin-login');
@@ -126,7 +161,7 @@ app.get('/admin', (req, res) => {
 });
 
 // Handle admin form submit with file upload
-app.post('/admin', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'logoFile', maxCount: 1 }, { name: 'galleryImages', maxCount: 10 }]), (req, res) => {
+app.post('/admin-old', upload.fields([{ name: 'heroImage', maxCount: 1 }, { name: 'logoFile', maxCount: 1 }, { name: 'galleryImages', maxCount: 10 }]), (req, res) => {
   console.log('Request Body:', req.body);
   console.log('Request Files:', req.files);
   const form = req.body;
