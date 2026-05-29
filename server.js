@@ -302,3 +302,63 @@ app.post('/api/contact', async (req, res) => {
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`GreenScape site running on http://0.0.0.0:${PORT}`);
 });
+
+// New admin page
+app.get('/admin-new', (req, res) => {
+  const content = loadContent();
+  res.render('admin-new', { content, message: null });
+});
+
+app.post('/admin-new/save', (req, res) => {
+  const content = loadContent();
+  const body = req.body;
+  
+  // Save main settings
+  ['siteTitle', 'phone', 'email', 'region', 'heroTitle', 'heroSubtitle', 'heroImage', 'logoPath', 'logoHeight',
+   'headerBg', 'headerBgScrolled', 'titleColor', 'titleColorScrolled',
+   'sectionBg', 'cardBg', 'accentColor', 'footerBg', 'footerText', 'formBg', 'formText',
+   'blogHeroTitle', 'blogHeroSubtitle'].forEach(key => {
+    if (body[key]) content[key] = body[key];
+  });
+  
+  // Save blog articles
+  if (body.blog) {
+    content.blog = body.blog;
+  }
+  
+  // Save gallery
+  if (body.gallery) {
+    content.gallery = Array.isArray(body.gallery) ? body.gallery : [body.gallery];
+  }
+  
+  // Add new gallery image
+  if (body.galleryNew) {
+    if (!content.gallery) content.gallery = [];
+    content.gallery.push(body.galleryNew);
+  }
+  
+  fs.writeFileSync(CONTENT_PATH, JSON.stringify(content, null, 2));
+  res.render('admin-new', { content, message: { type: 'success', text: 'Сохранено!' } });
+});
+
+app.post('/admin-new/upload', upload.single('file'), (req, res) => {
+  if (req.file) {
+    res.json({ success: true, path: '/uploads/' + req.file.filename });
+  } else {
+    res.json({ success: false, error: 'No file' });
+  }
+});
+
+// Ensure uploads directory exists
+if (!fs.existsSync('./public/uploads')) {
+  fs.mkdirSync('./public/uploads');
+}
+
+// Upload route for admin
+app.post('/admin-new/upload', upload.single('file'), (req, res) => {
+  if (req.file) {
+    res.json({ success: true, path: '/uploads/' + req.file.filename });
+  } else {
+    res.json({ success: false, error: 'No file' });
+  }
+});

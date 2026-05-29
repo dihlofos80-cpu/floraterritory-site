@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <link rel="icon" type="image/png" href="/favicon-site.png?v=4">
+  <link rel="icon" type="image/svg+xml" href="/favicon-site.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-site.png?v=4">
   <meta charset="UTF-8">
-  <title><%= content.siteTitle %> — озеленение и ландшафтный дизайн</title>
+        <title><%= content.siteTitle %> — озеленение и ландшафтный дизайн</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Профессиональное озеленение и ландшафтный дизайн: от проекта до ухода за участком. Ижевск и Удмуртская республика.">
   <meta name="keywords" content="озеленение, ландшафтный дизайн, Ижевск, растения, газон, благоустройство, озеленение участка, ландшафт, дизайн сада, посадка растений, газон под ключ, система автополива">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <link rel="icon" type="image/png" href="/images/logo.png?v=2">
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-256.png?v=2">
-  <link rel="stylesheet" href="/main.css">
+        <link rel="stylesheet" href="/main.css">
   <!-- Open Graph -->
   <meta property="og:title" content="<%= content.siteTitle %> — озеленение и ландшафтный дизайн">
   <meta property="og:description" content="Профессиональное озеленение и ландшафтный дизайн: от проекта до ухода за участком в Ижевске.">
-  <meta property="og:image" content="<%= content.heroImage || '/images/logo.png' %>">
+  <meta property="og:image" content="<%= content.heroImage || '/images/logo-new.png' %>">
   <meta property="og:url" content="https://floraterritory.ru/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Территория Флоры">
@@ -29,7 +29,7 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Территория Флоры",
-    "image": "https://floraterritory.ru/images/logo.png",
+    "image": "https://floraterritory.ru/images/logo-new.png",
     "url": "https://floraterritory.ru",
     "telephone": "+79127460468",
     "email": "grechkovb@yandex.ru",
@@ -81,6 +81,8 @@
   <% if (content.heroImage) { %>
   <link rel="preload" as="image" href="<%= content.heroImage %>">
   <% } %>
+<link rel="icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
 
@@ -88,11 +90,11 @@
   <div class="container">
     <div class="header-inner">
       
-      <div class="logo"><img src="<%= content.logoPath || '/images/logo.png' %>" alt="<%= content.siteTitle || 'Логотип сайта' %>" style="height: <%= content.logoHeight || '50px' %>; opacity: 0.6;"/></div>
+      <div class="logo"><img src="<%= content.logoPath || '/images/logo-new.png' %>" alt="<%= content.siteTitle || 'Логотип сайта' %>" style="height: <%= content.logoHeight || '50px' %>; opacity: 0.6;"/></div>
 
       <div class="site-title" style="color:<%= content.titleColor || "#fff" %>;text-shadow:1px 1px 2px rgba(0,0,0,0.5);"><%= content.siteTitle %></div>
       <nav style="display:flex;gap:15px;">
-        <a href="/blog" style="color:<%= content.titleColor || '#fff' %>;text-decoration:none;font-size:14px;">Блог</a>
+        <a href="/blog" class="nav-link" style="color:<%= content.titleColor || "#fff" %>;text-decoration:none;font-size:14px;">Блог</a>
       </nav>
       <div class="header-contacts">
         <a href="tel:+<%= content.phone.replace(/[^0-9]/g, '') %>">
@@ -383,7 +385,7 @@
         // Под шапкой - полностью непрозрачный
         header.style.background = "#f1ebe0";
         document.querySelector('.site-title').style.color = '#222222';
-        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label').forEach(el => el.style.color = '#222222');
+        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label, .nav-link').forEach(el => el.style.color = '#222222');
       } else if (rect.top > 0 && rect.top <= 100) {
         // В переходной зоне - плавно увеличиваем opacity от 0.2 до 0.95
         const progress = 1 - (rect.top / 100); // 1 вверху hero (rect.top=100), 0 при rect.top=0
@@ -391,12 +393,12 @@
         header.style.background = hexToRgba("#f1ebe0", opacity);
         // Плавная смена цвета текста
         document.querySelector('.site-title').style.color = '#222222';
-        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label').forEach(el => el.style.color = '#222222');
+        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label, .nav-link').forEach(el => el.style.color = '#222222');
       } else {
         // В hero секции - прозрачный
         header.style.background = 'rgba(0,0,0,0.4)';
         document.querySelector('.site-title').style.color = '#ffffff';
-        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label').forEach(el => el.style.color = '#ffffff');
+        document.querySelectorAll('.header-contacts, .header-contacts a, .header-contacts .label, .nav-link').forEach(el => el.style.color = '#ffffff');
       }
     }
     lastScroll = window.scrollY;

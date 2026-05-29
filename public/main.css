@@ -966,3 +966,23 @@ footer .footer-inner {
 .blog-post-content p {
   margin-bottom: 15px;
 }
+
+.blog-card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Fix for article text wrapping */
+.blog-post-content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Article text fix */
+.blog-post-content div, .blog-post-content {
+  max-width: 100% !important;
+  width: auto !important;
+  overflow-x: hidden !important;
+}

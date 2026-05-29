@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Админка — <%= content.siteTitle %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/images/logo-new.png?v=3">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-256.png?v=3">
+  <link rel="stylesheet" href="/main.css">
+  <style>
+
+    .upload-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: #f5f0e6; color: #333; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+    .upload-btn:hover { background: #e8e0d0; }
+    .upload-btn input { display: none; }
+    .file-list { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .file-item { position: relative; }
+    .file-item img { width: 100px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd; }
+    .file-item .remove { position: absolute; top: -8px; right: -8px; background: #dc3545; color: #fff; border: none; width: 20px; height: 20px; border-radius: 50%; cursor: pointer; font-size: 12px; line-height: 1; }
+
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; background: #f5f0e6; }
+    .admin-header { background: #302d27; color: #fff; padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+    .admin-header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .admin-header a { color: #fff; text-decoration: none; margin-left: 20px; }
+    .admin-header .logo { font-weight: bold; font-size: 18px; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+    .section { background: #f5f0e6; border-radius: 8px; padding: 25px; margin-bottom: 25px; }
+    .section-title { color: #285428; margin-top: 0; font-size: 22px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .field { margin-bottom: 15px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #333; }
+    .field input[type="text"], .field textarea, .field select { 
+      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; 
+    }
+    .field textarea { min-height: 80px; resize: vertical; }
+    .field input[type="color"] { width: 60px; height: 40px; border: none; cursor: pointer; }
+    .field img { max-width: 200px; border-radius: 6px; margin-top: 5px; }
+    .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; }
+    .btn-primary { background: #f5f0e6; color: #333; color: #fff; }
+    .btn-secondary { background: #999; color: #fff; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn:hover { opacity: 0.9; }
+    .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab { padding: 10px 20px; background: #ddd; border: none; border-radius: 6px; cursor: pointer; }
+    .tab.active { background: #f5f0e6; color: #333; color: #fff; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .article-card { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .article-card h3 { margin-top: 0; color: #285428; }
+    .save-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #f5f0e6; color: #333; padding: 15px 30px; border-radius: 8px; display: flex; gap: 15px; z-index: 1000; }
+    .save-bar .btn { padding: 10px 20px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+    .gallery-item { position: relative; }
+    .gallery-item img { width: 100%; height: 100px; object-fit: cover; border-radius: 6px; }
+    .gallery-item .delete { position: absolute; top: 5px; right: 5px; background: #dc3545; color: #fff; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; }
+    .message { padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+    .message.success { background: #d4edda; color: #155724; }
+    .message.error { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+
+<header class="admin-header">
+  <div class="container admin-header-inner">
+    <div class="logo">Админка: <%= content.siteTitle %></div>
+    <nav>
+      <a href="/" target="_blank">Сайт</a>
+      <a href="/blog" target="_blank">Блог</a>
+      <a href="/admin-login" onclick="document.cookie='admin_auth=;expires=Thu,01Jan197000:00:00GMT';">Выход</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <% if (message) { %>
+    <div class="message <%= message.type %>"><%= message.text %></div>
+  <% } %>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('main')">Главная</button>
+    <button class="tab" onclick="showTab('colors')">Цвета</button>
+    <button class="tab" onclick="showTab('blog')">Блог</button>
+    <button class="tab" onclick="showTab('gallery')">Галерея</button>
+  </div>
+
+  <form method="post" action="/admin-new/save">
+    
+    <!-- ГЛАВНАЯ -->
+    <div class="tab-content active" id="tab-main">
+      <div class="section">
+        <h2 class="section-title">Основные настройки</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Название сайта</label>
+            <input type="text" name="siteTitle" value="<%= content.siteTitle || '' %>">
+          </div>
+          <div class="field">
+            <label>Телефон</label>
+            <input type="text" name="phone" value="<%= content.phone || '' %>">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="text" name="email" value="<%= content.email || '' %>">
+          </div>
+          <div class="field">
+            <label>Регион</label>
+            <input type="text" name="region" value="<%= content.region || '' %>">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Hero секция</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Hero заголовок</label>
+            <input type="text" name="heroTitle" value="<%= content.heroTitle || '' %>">
+          </div>
+          <div class="field">
+            <label>Hero подзаголовок</label>
+            <textarea name="heroSubtitle"><%= content.heroSubtitle || '' %></textarea>
+          </div>
+          <div class="field">
+            <label>Hero изображение</label>
+            <label class="upload-btn">
+              <input type="file" id="file-heroImage" onchange="uploadFile('heroImage')">
+              📁 Выбрать файл
+            </label>
+            <input type="text" name="heroImage" id="input-heroImage" value="<%= content.heroImage || '' %>" placeholder="Или введите URL">
+            <div id="preview-heroImage"><% if (content.heroImage) { %><img src="<%= content.heroImage %>" alt="Hero"><% } %></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Логотип</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Логотип</label>
+            <label class="upload-btn">
+              <input type="file" id="file-logoPath" onchange="uploadFile('logoPath')">
+              📁 Выбрать файл
+            </label>
+            <input type="text" name="logoPath" id="input-logoPath" value="<%= content.logoPath || '' %>" placeholder="Или введите URL">
+            <div id="preview-logoPath"><% if (content.logoPath) { %><img src="<%= content.logoPath %>" alt="Логотип" style="height:50px;"><% } %></div>
+          </div>
+          <div class="field">
+            <label>Высота логотипа</label>
+            <input type="text" name="logoHeight" value="<%= content.logoHeight || '50px' %>">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЦВЕТА -->
+    <div class="tab-content" id="tab-colors">
+      <div class="section">
+        <h2 class="section-title">Шапка</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Цвет шапки (прозрачная)</label>
+            <input type="color" name="headerBg" value="<%= content.headerBg || '#302d27' %>">
+          </div>
+          <div class="field">
+            <label>Цвет шапки (при прокрутке)</label>
+            <input type="color" name="headerBgScrolled" value="<%= content.headerBgScrolled || '#f1ebe0' %>">
+          </div>
+          <div class="field">
+            <label>Цвет текста шапки</label>
+            <input type="color" name="titleColor" value="<%= content.titleColor || '#ffffff' %>">
+          </div>
+          <div class="field">
+            <label>Цвет текста шапки (при прокрутке)</label>
+            <input type="color" name="titleColorScrolled" value="<%= content.titleColorScrolled || '#222222' %>">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Секции</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Фон секций</label>
+            <input type="color" name="sectionBg" value="<%= content.sectionBg || '#f5f0e6' %>">
+          </div>
+          <div class="field">
+            <label>Фон карточек</label>
+            <input type="color" name="cardBg" value="<%= content.cardBg || '#f1ebe0' %>">
+          </div>
+          <div class="field">
+            <label>Акцентный цвет</label>
+            <input type="color" name="accentColor" value="<%= content.accentColor || '#285428' %>">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Подвал</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Фон подвала</label>
+            <input type="color" name="footerBg" value="<%= content.footerBg || '#1b361b' %>">
+          </div>
+          <div class="field">
+            <label>Цвет текста подвала</label>
+            <input type="color" name="footerText" value="<%= content.footerText || '#cbc3b4' %>">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Форма заявки</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Фон формы</label>
+            <input type="color" name="formBg" value="<%= content.formBg || '#ffffff' %>">
+          </div>
+          <div class="field">
+            <label>Цвет текста формы</label>
+            <input type="color" name="formText" value="<%= content.formText || '#222222' %>">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- БЛОГ -->
+    <div class="tab-content" id="tab-blog">
+      <div class="section">
+        <h2 class="section-title">Страница блога</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Заголовок</label>
+            <input type="text" name="blogHeroTitle" value="<%= content.blogHeroTitle || 'Полезные статьи о саде' %>">
+          </div>
+          <div class="field">
+            <label>Подзаголовок</label>
+            <textarea name="blogHeroSubtitle"><%= content.blogHeroSubtitle || 'Советы по ландшафтному дизайну' %></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Статьи</h2>
+        <% if (content.blog && content.blog.length > 0) { %>
+          <% content.blog.forEach(function(post, index) { %>
+            <div class="article-card">
+              <h3>Статья <%= index + 1 %>: <%= post.title %></h3>
+              <input type="hidden" name="blog[<%= index %>][slug]" value="<%= post.slug %>">
+              <div class="grid">
+                <div class="field">
+                  <label>Заголовок</label>
+                  <input type="text" name="blog[<%= index %>][title]" value="<%= post.title %>">
+                </div>
+                <div class="field">
+                  <label>Изображение (URL)</label>
+                  <input type="text" name="blog[<%= index %>][image]" value="<%= post.image || '' %>">
+                  <% if (post.image) { %>
+                    <img src="<%= post.image %>" alt="Статья">
+                  <% } %>
+                </div>
+              </div>
+              <div class="field">
+                <label>Краткое описание</label>
+                <textarea name="blog[<%= index %>][excerpt]"><%= post.excerpt %></textarea>
+              </div>
+              <div class="field">
+                <label>Полный текст (используй **текст** для жирного)</label>
+                <textarea name="blog[<%= index %>][content]" style="min-height: 200px;"><%= post.content %></textarea>
+              </div>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <p>Статей пока нет</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- ГАЛЕРЕЯ -->
+    <div class="tab-content" id="tab-gallery">
+      <div class="section">
+        <h2 class="section-title">Галерея работ</h2>
+        <div class="field">
+          <label>Добавить изображение</label>
+          <label class="upload-btn">
+            <input type="file" id="file-gallery" onchange="addGalleryImage()">
+            ➕ Добавить фото
+          </label>
+        </div>
+        <% if (content.gallery && content.gallery.length > 0) { %>
+          <div class="gallery-grid">
+            <% content.gallery.forEach(function(img, index) { %>
+              <div class="gallery-item">
+                <img src="<%= img %>" alt="Работа <%= index + 1 %>">
+                <input type="hidden" name="gallery[]" value="<%= img %>">
+                <button type="button" class="delete" onclick="this.parentElement.remove()">×</button>
+              </div>
+            <% }); %>
+          </div>
+        <% } else { %>
+          <p>Галерея пуста</p>
+        <% } %>
+      </div>
+    </div>
+
+  <div class="save-bar">
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <button type="button" class="btn btn-secondary" onclick="location.reload()">Отмена</button>
+  </div>
+  </form>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+
+<script>
+function uploadFile(fieldName) {
+  const input = document.getElementById('file-' + fieldName);
+  const formData = new FormData();
+  formData.append('file', input.files[0]);
+  
+  fetch('/admin-new/upload', { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('input-' + fieldName).value = data.path;
+        document.getElementById('preview-' + fieldName).innerHTML = '<img src="' + data.path + '" style="max-width:150px;border-radius:6px;margin-top:8px;">';
+      }
+    });
+}
+
+function addGalleryImage() {
+  const input = document.getElementById('file-gallery');
+  const formData = new FormData();
+  formData.append('file', input.files[0]);
+  
+  fetch('/admin-new/upload', { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.innerHTML = '<img src="' + data.path + '"><input type="hidden" name="gallery[]" value="' + data.path + '"><button type="button" class="remove" onclick="this.parentElement.remove()">×</button>';
+        document.getElementById('gallery-list').appendChild(div);
+        input.value = '';
+      }
+    });
+}
+</script>
+</body>
+</html>
