@@ -1039,9 +1039,15 @@ footer .footer-inner {
     margin-right: -15px !important;
     width: calc(100% + 30px) !important;
   }
+  body {
+    overflow-x: hidden !important;
+  }
   #services {
     padding-left: 0 !important;
     padding-right: 0 !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
   }
   #services > .container {
     max-width: 100% !important;
