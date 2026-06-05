@@ -986,3 +986,23 @@ footer .footer-inner {
   width: auto !important;
   overflow-x: hidden !important;
 }
+
+/* Mobile blog styles */
+@media (max-width: 768px) {
+  .blog-post-image {
+    height: 250px;
+    width: 100%;
+    border-radius: 0;
+  }
+  .blog-post h1 {
+    padding: 20px 15px 10px;
+    font-size: 1.5rem;
+  }
+  .blog-post-content {
+    padding: 0 15px 20px;
+    text-align: justify;
+  }
+  .blog-post-content p {
+    margin-bottom: 15px;
+  }
+}
