@@ -1035,6 +1035,17 @@ footer .footer-inner {
   .blog-grid {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
+    margin-left: -15px !important;
+    margin-right: -15px !important;
+    width: calc(100% + 30px) !important;
+  }
+  #services {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  #services > .container {
+    max-width: 100% !important;
+    padding: 0 15px !important;
   }
   .card {
     width: 100% !important;
