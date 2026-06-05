@@ -1042,7 +1042,12 @@ footer .footer-inner {
   body {
     overflow-x: hidden !important;
   }
-  #services {
+  #services.section {
+    padding: 40px 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  #services > .container {
     padding-left: 0 !important;
     padding-right: 0 !important;
     max-width: 100vw !important;
