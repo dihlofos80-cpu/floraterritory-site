@@ -53,6 +53,12 @@
       <a href="/blog" style="display:inline-block;margin-bottom:20px;color:#285428;text-decoration:none;">← К статьям</a>
       
       <article style="background:#f1ebe0;padding:30px;border-radius:8px;max-width:100%;overflow:hidden;">
+        <style>
+          @media (max-width: 768px) {
+            article { padding: 15px !important; border-radius: 0 !important; }
+            article img, article div { max-width: 100% !important; width: 100% !important; }
+          }
+        </style>
         <div style="font-size:1.1rem;line-height:1.8;color:#333;word-wrap:break-word;overflow-wrap:break-word;white-space:pre-wrap;max-width:100%;">
           <style>.blog-post-content p { max-width:100%;word-break:break-word; }</style>
           <%- post.content.replace(/\n\n/g, '</p><p>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') %>
