@@ -974,17 +974,27 @@ footer .footer-inner {
   border-radius: 8px 8px 0 0;
 }
 
-/* Fix for article text wrapping */
-.blog-post-content {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+/* Blog article styles */
+.blog-article {
+  background: #f1ebe0;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
-/* Article text fix */
-.blog-post-content div, .blog-post-content {
-  max-width: 100% !important;
-  width: auto !important;
-  overflow-x: hidden !important;
+.blog-article-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+}
+
+.blog-article-content p {
+  margin-bottom: 15px;
 }
 
 /* Mobile blog styles */
@@ -1004,5 +1014,17 @@ footer .footer-inner {
   }
   .blog-post-content p {
     margin-bottom: 15px;
+  }
+  .blog-article {
+    padding: 15px;
+    border-radius: 0;
+    max-width: 100vw;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    box-sizing: border-box;
+  }
+  .blog-article-content {
+    padding: 0;
   }
 }
