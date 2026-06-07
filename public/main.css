@@ -1037,8 +1037,9 @@ footer .footer-inner {
     gap: 20px !important;
     margin-left: -15px !important;
     margin-right: -15px !important;
-    width: calc(100% + 30px) !important;
+    width: calc(100% + 60px) !important;
   }
+  .card > div:first-child {
   body {
     overflow-x: hidden !important;
   }
