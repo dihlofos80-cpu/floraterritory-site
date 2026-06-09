@@ -766,8 +766,13 @@ footer .footer-inner {
 
   /* Services slider - 1 card full width */
   .services-slide {
-    flex: 0 0 calc(100% - 18px) !important;
+    flex: 0 0 100% !important;
     min-width: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .services-track {
+    gap: 0 !important;
   }
 
   .services-slider {
@@ -776,7 +781,7 @@ footer .footer-inner {
   }
 
   .services-wrapper {
-    padding: 0 30px !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
   }
 
@@ -788,6 +793,7 @@ footer .footer-inner {
     backdrop-filter: blur(2px);
     top: 50% !important;
     transform: translateY(-50%) !important;
+    z-index: 10 !important;
   }
 
   .services-btn:hover {
