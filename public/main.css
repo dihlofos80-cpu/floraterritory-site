@@ -769,6 +769,13 @@ footer .footer-inner {
     flex: 0 0 100% !important;
     min-width: auto !important;
     box-sizing: border-box !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .services-slide > * {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .services-track {
