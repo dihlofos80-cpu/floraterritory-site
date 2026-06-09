@@ -501,7 +501,7 @@
     else if (index < 0) currentService = totalSlides - 1;
     else currentService = index;
     
-    const slideWidth = slides[0].offsetWidth + 18; // width + gap
+    const slideWidth = slides[0].offsetWidth;
     track.style.transform = `translateX(-${currentService * slideWidth}px)`;
     
     // Update dots
