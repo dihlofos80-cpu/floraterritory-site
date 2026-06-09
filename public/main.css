@@ -763,6 +763,26 @@ footer .footer-inner {
     margin-right: 0;
     width: 100%;
   }
+
+  /* Services slider - 1 card full width */
+  .services-slide {
+    flex: 0 0 calc(100% - 18px) !important;
+  }
+
+  .services-btn {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 12px !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    backdrop-filter: blur(2px);
+  }
+
+  .services-btn:hover {
+    background: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .services-prev { left: 8px; }
+  .services-next { right: 8px; }
 }
 
 .consent-wrapper {
