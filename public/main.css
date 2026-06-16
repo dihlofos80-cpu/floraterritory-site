@@ -647,7 +647,7 @@ footer .footer-inner {
   }
 
   .hero-image {
-    order: -1;
+    order: 1;
   }
 }
 .site-title { font-size: 24px; font-weight: bold; margin-bottom: 5px; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
