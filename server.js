@@ -22,11 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Cache for static assets
-app.use(express.static(path.join(__dirname, 'public'), {
-  maxAge: '7d',
-  etag: true,
-  lastModified: true
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup multer for file uploads - store in public/images/ with unique names
 const storage = multer.diskStorage({
