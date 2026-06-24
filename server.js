@@ -5,7 +5,7 @@ const multer = require('multer');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const CONTENT_PATH = path.join(__dirname, 'content.json');
 const ADMIN_PASSWORD = (() => {
   try {
